@@ -7,5 +7,5 @@ dist/
 .DS_Store
 Thumbs.db
 *.log
+*.tar.gz
 auto-imports.d.ts
-

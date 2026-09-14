@@ -46,8 +46,18 @@ export default function AgendarPage() {
             onSelect={setServicio}
           />
         )}
-        {step === 2 && <StepSelectDay selected={dia} onSelect={setDia} />}
-        {step === 3 && <StepSelectTime selected={horario} onSelect={setHorario} />}
+        {step === 2 && (
+          <StepSelectDay
+            selected={dia}
+            onSelect={(value) => {
+              setDia(value);
+              setHorario("");
+            }}
+          />
+        )}
+        {step === 3 && (
+          <StepSelectTime client={client} day={dia} selected={horario} onSelect={setHorario} />
+        )}
         {step === 4 && (
           <StepConfirm
             client={client}

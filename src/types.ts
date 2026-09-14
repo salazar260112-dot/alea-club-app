@@ -31,6 +31,11 @@ export interface Servicio {
   id: string;
   nombre: string;
   descripcion: string;
+  precio: string;
+  imagen: string;
+  categoria: string;
+  duracion: string;
+  beneficios: string[];
   icono: string;
 }
 

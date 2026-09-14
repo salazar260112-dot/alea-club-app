@@ -1,41 +1,13 @@
 import { useMemo } from "react";
+import { getAgendaDays } from "@/mocks/disponibilidad";
 
 interface StepSelectDayProps {
   selected: string;
   onSelect: (label: string) => void;
 }
 
-const DIAS = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
-const MESES = [
-  "ene",
-  "feb",
-  "mar",
-  "abr",
-  "may",
-  "jun",
-  "jul",
-  "ago",
-  "sep",
-  "oct",
-  "nov",
-  "dic",
-];
-
 export default function StepSelectDay({ selected, onSelect }: StepSelectDayProps) {
-  const days = useMemo(() => {
-    const base = new Date();
-    return Array.from({ length: 7 }, (_, index) => {
-      const date = new Date(base);
-      date.setDate(base.getDate() + index);
-      const label = `${DIAS[date.getDay()]} ${date.getDate()} ${MESES[date.getMonth()]}`;
-      return {
-        key: label,
-        label: index === 0 ? "Hoy" : index === 1 ? "Mañana" : DIAS[date.getDay()],
-        dayNumber: date.getDate(),
-        mes: MESES[date.getMonth()],
-      };
-    });
-  }, []);
+  const days = useMemo(() => getAgendaDays(7), []);
 
   return (
     <div className="px-5 pt-5">
@@ -68,7 +40,7 @@ export default function StepSelectDay({ selected, onSelect }: StepSelectDayProps
               <span className="mt-0.5 font-heading text-lg font-extrabold text-foreground-950">
                 {day.dayNumber}
               </span>
-              <span className="text-[10px] uppercase text-foreground-400">{day.mes}</span>
+              <span className="text-[10px] uppercase text-foreground-400">{day.month}</span>
             </button>
           );
         })}
