@@ -32,6 +32,7 @@ export interface Servicio {
   nombre: string;
   descripcion: string;
   precio: string;
+  costos?: string[];
   imagen: string;
   categoria: string;
   duracion: string;

@@ -64,6 +64,24 @@ export default function ServiceBookingModal({
             <div className="p-5">
               <p className="text-sm leading-relaxed text-foreground-600">{servicio.descripcion}</p>
 
+              {servicio.costos && servicio.costos.length > 0 && (
+                <div className="mt-5 rounded-2xl border border-primary-200 bg-primary-50/70 p-4">
+                  <p className="font-heading text-[11px] font-bold uppercase tracking-[0.18em] text-primary-700">
+                    Costos
+                  </p>
+                  <div className="mt-3 grid gap-2">
+                    {servicio.costos.map((costo) => (
+                      <div
+                        key={costo}
+                        className="flex items-center justify-between gap-3 rounded-xl bg-background-50 px-3 py-2.5 text-xs font-bold text-foreground-800"
+                      >
+                        <span>{costo}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               <div className="mt-5 grid gap-2">
                 {servicio.beneficios.map((beneficio) => (
                   <div key={beneficio} className="flex items-center gap-2 rounded-xl bg-background-100 px-3 py-2.5">
