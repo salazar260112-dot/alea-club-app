@@ -1,129 +1,235 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import PageHeader from "@/components/feature/PageHeader";
-import ProfileForm from "@/pages/perfil/components/ProfileForm";
-import RequestsList from "@/pages/perfil/components/RequestsList";
+import { Link } from "react-router-dom";
+import EditProfileModal from "@/pages/perfil/components/EditProfileModal";
+import Badge from "@/components/base/Badge";
+import Button from "@/components/base/Button";
 import { useClient } from "@/hooks/useClient";
+import { longDateLabel } from "@/utils/date";
+import { formatDateTime } from "@/utils/format";
+import { siteConfig } from "@/config/site";
+import type { ClientInfo } from "@/context/client-types";
 
-export default function PerfilPage() {
-  const { client, update, logout } = useClient();
-  const navigate = useNavigate();
+export default function Perfil() {
+  const { client, appointments, promoRequests, updateClient, cancelAppointment, logout } =
+    useClient();
   const [editing, setEditing] = useState(false);
 
-  if (!client) return null;
+  const initial = (client?.name ?? "A").charAt(0).toUpperCase();
 
-  const initial = client.nombre.trim().charAt(0).toUpperCase();
-
-  const handleSave = (data: { nombre: string; telefono: string; correo: string }) => {
-    update(data);
-    setEditing(false);
-  };
-
-  const handleLogout = () => {
-    logout();
-    navigate("/", { replace: true });
+  const handleSave = (info: ClientInfo) => {
+    updateClient(info);
   };
 
   return (
     <div className="animate-fade-in">
-      <PageHeader
-        title="Mi perfil"
-        subtitle="Tus datos y solicitudes"
-        right={
-          !editing ? (
-            <button
-              type="button"
-              onClick={() => setEditing(true)}
-              aria-label="Editar datos"
-              className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-md border border-background-300 bg-background-50 text-foreground-700 transition-colors hover:bg-background-100"
-            >
-              <i className="ri-pencil-line" />
-            </button>
-          ) : undefined
-        }
-      />
+      <header className="px-5 pb-4 pt-6">
+        <p className="font-label text-[10px] font-bold uppercase tracking-[0.28em] text-accent-700">
+          Mi cuenta
+        </p>
+        <h1 className="mt-1 font-heading text-xl font-extrabold text-foreground-950">Perfil</h1>
+      </header>
 
-      <div className="flex flex-col gap-6 pb-6 pt-5">
-        {!editing && (
-          <section className="px-5">
-            <div className="rounded-xl border border-background-200 bg-background-50 p-5">
-              <div className="flex items-center gap-4">
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-foreground-950 font-heading text-xl font-bold text-background-50">
-                  {initial}
-                </div>
-                <div className="min-w-0">
-                  <p className="truncate font-heading text-base font-extrabold text-foreground-950">
-                    {client.nombre}
-                  </p>
-                  <p className="text-[11px] uppercase tracking-wider text-primary-700">
-                    Miembro ALÉA Club
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-5 flex flex-col gap-3 border-t border-background-200 pt-4">
-                <div className="flex items-center gap-3">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-md bg-background-100 text-foreground-700">
-                    <i className="ri-whatsapp-line" />
-                  </span>
-                  <div className="min-w-0">
-                    <p className="text-[10px] uppercase tracking-wider text-foreground-400">
-                      Teléfono WhatsApp
-                    </p>
-                    <p className="truncate text-sm font-medium text-foreground-950">{client.telefono}</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-md bg-background-100 text-foreground-700">
-                    <i className="ri-mail-line" />
-                  </span>
-                  <div className="min-w-0">
-                    <p className="text-[10px] uppercase tracking-wider text-foreground-400">
-                      Correo electrónico
-                    </p>
-                    <p className="truncate text-sm font-medium text-foreground-950">{client.correo}</p>
-                  </div>
-                </div>
-              </div>
+      <section className="px-5">
+        <div className="overflow-hidden rounded-3xl bg-primary-500 p-5">
+          <div className="flex items-center gap-4">
+            <span className="flex h-14 w-14 flex-none items-center justify-center rounded-full bg-accent-500 font-heading text-xl font-extrabold text-primary-950">
+              {initial}
+            </span>
+            <div className="min-w-0">
+              <p className="font-heading text-lg font-extrabold leading-tight text-background-50">
+                {client?.name ?? "Clienta ALÉA"}
+              </p>
+              <p className="mt-0.5 inline-flex items-center gap-1 font-label text-[11px] font-semibold uppercase tracking-wider text-accent-300">
+                <i className="ri-vip-crown-line text-sm leading-none" />
+                Miembro ALÉA Club
+              </p>
             </div>
-          </section>
-        )}
+          </div>
 
-        {editing && (
-          <section className="px-5">
-            <div className="rounded-xl border border-background-200 bg-background-50 p-5">
-              <h2 className="mb-4 font-heading text-sm font-bold text-foreground-950">
-                Editar mis datos
-              </h2>
-              <ProfileForm
-                initial={{
-                  nombre: client.nombre,
-                  telefono: client.telefono,
-                  correo: client.correo,
-                }}
-                onSave={handleSave}
-                onCancel={() => setEditing(false)}
-              />
+          <div className="mt-5 flex flex-col gap-2.5 border-t border-primary-400/40 pt-4">
+            <div className="flex items-center gap-2.5 text-sm text-background-200">
+              <i className="ri-phone-line text-base leading-none text-accent-300" />
+              {client?.phone ?? "—"}
             </div>
-          </section>
-        )}
+            <div className="flex items-center gap-2.5 text-sm text-background-200">
+              <i className="ri-mail-line text-base leading-none text-accent-300" />
+              {client?.email ?? "—"}
+            </div>
+          </div>
 
-        <RequestsList citas={client.citas} promos={client.promos} />
-
-        <section className="px-5">
           <button
             type="button"
-            onClick={handleLogout}
-            className="flex w-full cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md border border-background-300 bg-background-50 px-6 py-3.5 font-heading text-sm font-bold text-accent-700 transition-colors hover:bg-background-100"
+            onClick={() => setEditing(true)}
+            className="mt-5 inline-flex h-10 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-full bg-background-50 px-5 font-label text-sm font-semibold text-foreground-950 transition-colors hover:bg-background-100"
           >
-            <i className="ri-logout-box-r-line" />
-            Cerrar sesión
+            <i className="ri-edit-line text-base leading-none" />
+            Editar datos
           </button>
-          <p className="mt-3 text-center text-[10px] uppercase tracking-[0.2em] text-foreground-400">
-            ALÉA Club · Aesthetic House
+        </div>
+      </section>
+
+      <section className="mt-5 px-5">
+        <div className="grid grid-cols-2 gap-3">
+          <div className="rounded-2xl border border-background-200 bg-background-50 p-4 text-center shadow-soft">
+            <p className="font-heading text-2xl font-extrabold text-foreground-950">
+              {appointments.length}
+            </p>
+            <p className="mt-0.5 font-label text-[11px] font-semibold text-foreground-600">
+              Citas solicitadas
+            </p>
+          </div>
+          <div className="rounded-2xl border border-background-200 bg-background-50 p-4 text-center shadow-soft">
+            <p className="font-heading text-2xl font-extrabold text-foreground-950">
+              {promoRequests.length}
+            </p>
+            <p className="mt-0.5 font-label text-[11px] font-semibold text-foreground-600">
+              Promos solicitadas
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="mt-6 px-5">
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <h2 className="font-heading text-base font-bold text-foreground-950">Mis citas</h2>
+          <Link
+            to="/agenda"
+            className="cursor-pointer whitespace-nowrap font-label text-xs font-semibold text-accent-700"
+          >
+            Agendar nueva
+          </Link>
+        </div>
+
+        {appointments.length ? (
+          <ul className="flex flex-col gap-3">
+            {appointments.map((appointment) => (
+              <li
+                key={appointment.id}
+                className="rounded-2xl border border-background-200 bg-background-50 p-4 shadow-soft"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <h3 className="font-heading text-sm font-bold leading-snug text-foreground-950">
+                      {appointment.serviceName}
+                    </h3>
+                    <p className="mt-1 inline-flex items-center gap-1.5 text-xs text-foreground-600">
+                      <i className="ri-calendar-event-line text-sm leading-none" />
+                      {longDateLabel(appointment.date)}
+                    </p>
+                    <p className="mt-1 inline-flex items-center gap-1.5 text-xs text-foreground-600">
+                      <i className="ri-time-line text-sm leading-none" />
+                      {appointment.slot} h
+                    </p>
+                  </div>
+                  <Badge tone="accent">Solicitada</Badge>
+                </div>
+                <div className="mt-3 flex items-center justify-between gap-3 border-t border-background-200 pt-3">
+                  <span className="font-label text-[10px] text-foreground-500">
+                    Solicitada el {formatDateTime(appointment.createdAt)}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => cancelAppointment(appointment.id)}
+                    className="cursor-pointer whitespace-nowrap font-label text-[11px] font-semibold text-secondary-700 transition-colors hover:text-secondary-900"
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div className="flex flex-col items-center gap-2 rounded-2xl border border-background-200 bg-background-100/70 px-5 py-8 text-center">
+            <i className="ri-calendar-line text-3xl text-foreground-400" />
+            <p className="font-heading text-sm font-bold text-foreground-950">
+              Aún no tienes citas
+            </p>
+            <p className="text-xs text-foreground-600">
+              Agenda tu primer tratamiento y aparecerá aquí.
+            </p>
+          </div>
+        )}
+      </section>
+
+      <section className="mt-6 px-5">
+        <h2 className="mb-3 font-heading text-base font-bold text-foreground-950">
+          Promociones solicitadas
+        </h2>
+        {promoRequests.length ? (
+          <ul className="flex flex-col gap-3">
+            {promoRequests.map((request) => (
+              <li
+                key={request.id}
+                className="flex items-center gap-3 rounded-2xl border border-background-200 bg-background-50 p-4 shadow-soft"
+              >
+                <span className="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-accent-100 text-accent-700">
+                  <i className="ri-price-tag-3-line text-lg leading-none" />
+                </span>
+                <div className="min-w-0">
+                  <h3 className="truncate font-heading text-sm font-bold text-foreground-950">
+                    {request.promoName}
+                  </h3>
+                  <p className="text-[11px] text-foreground-500">
+                    Solicitada el {formatDateTime(request.createdAt)}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div className="flex flex-col items-center gap-2 rounded-2xl border border-background-200 bg-background-100/70 px-5 py-8 text-center">
+            <i className="ri-price-tag-3-line text-3xl text-foreground-400" />
+            <p className="font-heading text-sm font-bold text-foreground-950">
+              Sin promociones solicitadas
+            </p>
+            <Link
+              to="/promociones"
+              className="cursor-pointer font-label text-xs font-semibold text-accent-700"
+            >
+              Ver promociones vigentes
+            </Link>
+          </div>
+        )}
+      </section>
+
+      <section className="mt-6 px-5">
+        <div className="rounded-2xl border border-background-200 bg-background-50 p-4">
+          <h2 className="font-heading text-sm font-bold text-foreground-950">ALÉA Aesthetic House</h2>
+          <p className="mt-1.5 text-xs leading-relaxed text-foreground-600">
+            {siteConfig.address}
           </p>
-        </section>
-      </div>
+          <p className="mt-1 text-xs text-foreground-600">{siteConfig.hoursLabel}</p>
+          <a
+            href={`https://wa.me/${siteConfig.whatsappNumber}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex h-10 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-full border border-background-300 bg-background-50 px-5 font-label text-sm font-semibold text-foreground-950 transition-colors hover:border-accent-400"
+          >
+            <i className="ri-whatsapp-line text-base leading-none" />
+            {siteConfig.whatsappDisplay}
+          </a>
+        </div>
+      </section>
+
+      <section className="mt-5 px-5">
+        <Button
+          variant="ghost"
+          size="md"
+          fullWidth
+          icon="ri-logout-box-r-line"
+          onClick={logout}
+          className="text-foreground-600"
+        >
+          Cerrar sesión
+        </Button>
+      </section>
+
+      <EditProfileModal
+        open={editing}
+        client={client}
+        onClose={() => setEditing(false)}
+        onSave={handleSave}
+      />
     </div>
   );
 }
