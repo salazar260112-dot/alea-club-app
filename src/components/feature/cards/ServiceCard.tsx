@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { buttonClass } from "@/components/base/Button";
 import Badge from "@/components/base/Badge";
+import { formatPrice } from "@/utils/format";
 import type { Service } from "@/types/content";
 
 interface ServiceCardProps {
@@ -41,7 +42,8 @@ export default function ServiceCard({ service, className = "" }: ServiceCardProp
             {service.duration}
           </span>
           <span className="inline-flex items-center gap-1 font-label font-semibold text-foreground-950">
-            {service.priceLabel}
+            {service.priceFrom ? "Desde " : ""}
+            {formatPrice(service.price)}
           </span>
         </div>
         <div className="mt-auto pt-2">

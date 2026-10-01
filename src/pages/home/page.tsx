@@ -1,7 +1,7 @@
 import { useState } from "react";
 import HomeHeader from "@/pages/home/components/HomeHeader";
 import HeroPromo from "@/pages/home/components/HeroPromo";
-import BenefitsRow from "@/pages/home/components/BenefitsRow";
+import BenefitsQuickAccess from "@/pages/home/components/BenefitsQuickAccess";
 import TipsList from "@/pages/home/components/TipsList";
 import SectionHeader from "@/components/base/SectionHeader";
 import PromoCard from "@/components/feature/cards/PromoCard";
@@ -21,9 +21,8 @@ export default function Home() {
       <HomeHeader />
       <HeroPromo />
 
-      <section className="mt-7 px-5">
-        <SectionHeader title="Beneficios ALÉA Club" subtitle="Lo que ganas al ser parte" />
-        <BenefitsRow />
+      <section className="mt-6 px-5">
+        <BenefitsQuickAccess />
       </section>
 
       <section className="mt-7 px-5">

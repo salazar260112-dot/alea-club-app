@@ -89,6 +89,26 @@ export default function Perfil() {
         </div>
       </section>
 
+      <section className="mt-5 px-5">
+        <Link
+          to="/beneficios"
+          className="group relative flex items-center gap-3.5 overflow-hidden rounded-3xl border border-accent-200/70 p-4 shadow-soft transition-shadow hover:shadow-card"
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-accent-100/85 via-background-50/70 to-secondary-100/80 backdrop-blur-md" />
+          <div className="pointer-events-none absolute -right-8 -top-10 h-28 w-28 rounded-full bg-accent-300/40 blur-2xl" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-transparent via-background-50/60 to-transparent" />
+          <span className="relative flex h-12 w-12 flex-none items-center justify-center rounded-2xl border border-background-50/80 bg-background-50/60 text-accent-700 backdrop-blur">
+            <i className="ri-gift-2-line text-xl leading-none" />
+          </span>
+          <div className="relative min-w-0 flex-1">
+            <h2 className="font-heading text-sm font-bold text-foreground-950">
+              Mis beneficios
+            </h2>
+          </div>
+          <i className="relative ri-arrow-right-s-line text-xl leading-none text-accent-700 transition-transform group-hover:translate-x-0.5" />
+        </Link>
+      </section>
+
       <section className="mt-6 px-5">
         <div className="mb-3 flex items-center justify-between gap-3">
           <h2 className="font-heading text-base font-bold text-foreground-950">Mis citas</h2>

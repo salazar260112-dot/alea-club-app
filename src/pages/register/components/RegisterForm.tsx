@@ -44,14 +44,14 @@ export default function RegisterForm({ onSubmit }: RegisterFormProps) {
   };
 
   const fieldClass = (hasError: boolean) =>
-    `h-12 w-full rounded-xl border bg-background-50 px-4 text-sm text-foreground-950 outline-none transition-colors placeholder:text-foreground-400 focus:border-accent-400 ${
+    `h-11 w-full rounded-xl border bg-background-50 px-4 text-sm text-foreground-950 outline-none transition-colors placeholder:text-foreground-400 focus:border-accent-400 ${
       hasError ? "border-secondary-500" : "border-background-300"
     }`;
 
   return (
-    <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-4" noValidate>
+    <form onSubmit={handleSubmit} className="mt-5 flex flex-col gap-3" noValidate>
       <div>
-        <label htmlFor="name" className="mb-1.5 block font-label text-xs font-semibold text-foreground-700">
+        <label htmlFor="name" className="mb-1 block font-label text-xs font-semibold text-foreground-700">
           Nombre
         </label>
         <div className="relative">
@@ -71,7 +71,7 @@ export default function RegisterForm({ onSubmit }: RegisterFormProps) {
       </div>
 
       <div>
-        <label htmlFor="phone" className="mb-1.5 block font-label text-xs font-semibold text-foreground-700">
+        <label htmlFor="phone" className="mb-1 block font-label text-xs font-semibold text-foreground-700">
           Teléfono
         </label>
         <div className="relative">
@@ -92,7 +92,7 @@ export default function RegisterForm({ onSubmit }: RegisterFormProps) {
       </div>
 
       <div>
-        <label htmlFor="email" className="mb-1.5 block font-label text-xs font-semibold text-foreground-700">
+        <label htmlFor="email" className="mb-1 block font-label text-xs font-semibold text-foreground-700">
           Correo
         </label>
         <div className="relative">
@@ -111,7 +111,7 @@ export default function RegisterForm({ onSubmit }: RegisterFormProps) {
         {errors.email ? <p className="mt-1 text-[11px] text-secondary-700">{errors.email}</p> : null}
       </div>
 
-      <Button type="submit" variant="primary" size="lg" fullWidth className="mt-2">
+      <Button type="submit" variant="primary" size="lg" fullWidth className="mt-1">
         Crear mi cuenta
       </Button>
 

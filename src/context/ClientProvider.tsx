@@ -7,7 +7,6 @@ import {
 } from "@/context/client-types";
 
 const CLIENT_KEY = "alea.client";
-const LEGACY_CLIENT_KEY = "alea_club_client";
 const APPOINTMENTS_KEY = "alea.appointments";
 const PROMOS_KEY = "alea.promos";
 
@@ -29,27 +28,6 @@ function writeStorage(key: string, value: unknown): void {
   }
 }
 
-function readClient(): ClientInfo | null {
-  const current = readStorage<ClientInfo | null>(CLIENT_KEY, null);
-  if (current?.name && current?.phone && current?.email) return current;
-
-  const legacy = readStorage<{
-    nombre?: string;
-    telefono?: string;
-    correo?: string;
-  } | null>(LEGACY_CLIENT_KEY, null);
-
-  if (!legacy?.nombre || !legacy?.telefono || !legacy?.correo) return null;
-
-  const migrated = {
-    name: legacy.nombre,
-    phone: legacy.telefono,
-    email: legacy.correo,
-  };
-  writeStorage(CLIENT_KEY, migrated);
-  return migrated;
-}
-
 function createId(): string {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
     return crypto.randomUUID();
@@ -59,7 +37,7 @@ function createId(): string {
 
 export function ClientProvider({ children }: { children: ReactNode }) {
   const [client, setClient] = useState<ClientInfo | null>(() =>
-    readClient(),
+    readStorage<ClientInfo | null>(CLIENT_KEY, null),
   );
   const [appointments, setAppointments] = useState<Appointment[]>(() =>
     readStorage<Appointment[]>(APPOINTMENTS_KEY, []),

@@ -39,12 +39,12 @@ export default function BookingSummary({
 
       <dl className="mt-4 flex flex-col gap-3">
         {rows.map((row) => (
-          <div key={row.label} className="flex items-start justify-between gap-4">
-            <dt className="inline-flex items-center gap-2 font-label text-xs font-semibold text-foreground-600">
+          <div key={row.label} className="flex items-start justify-between gap-3">
+            <dt className="inline-flex flex-none items-center gap-2 font-label text-xs font-semibold text-foreground-600">
               <i className={`${row.icon} text-base leading-none text-accent-700`} />
               {row.label}
             </dt>
-            <dd className="max-w-[60%] text-right text-sm font-semibold text-foreground-950">
+            <dd className="min-w-0 max-w-[58%] break-words text-right text-sm font-semibold text-foreground-950">
               {row.value}
             </dd>
           </div>

@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import PageHeader from "@/components/feature/PageHeader";
 import Badge from "@/components/base/Badge";
 import { services } from "@/mocks/services";
+import { formatPrice } from "@/utils/format";
 
 export default function ServiceDetail() {
   const { id } = useParams();
@@ -50,29 +51,14 @@ export default function ServiceDetail() {
 
         <div className="flex flex-wrap items-center gap-3">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-background-100 px-3 py-1.5 font-label text-sm font-bold text-foreground-950">
-            {service.priceLabel}
+            {service.priceFrom ? "Desde " : ""}
+            {formatPrice(service.price)}
           </span>
           <span className="inline-flex items-center gap-1.5 rounded-full bg-background-100 px-3 py-1.5 font-label text-xs font-semibold text-foreground-600">
             <i className="ri-time-line text-base leading-none" />
             {service.duration}
           </span>
         </div>
-
-        {service.costs && service.costs.length > 0 ? (
-          <div className="rounded-2xl border border-accent-200 bg-accent-50/60 p-4">
-            <h2 className="font-heading text-sm font-bold text-foreground-950">Costos</h2>
-            <ul className="mt-2.5 flex flex-col gap-2">
-              {service.costs.map((cost) => (
-                <li
-                  key={cost}
-                  className="rounded-xl bg-background-50 px-3 py-2 text-xs font-semibold text-foreground-700"
-                >
-                  {cost}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ) : null}
 
         <div className="rounded-2xl bg-background-100/80 p-4">
           <h2 className="font-heading text-sm font-bold text-foreground-950">Descripción</h2>

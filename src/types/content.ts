@@ -3,12 +3,11 @@ export interface Service {
   name: string;
   category: string;
   image: string;
-  priceLabel: string;
-  costs?: string[];
+  price: number;
+  priceFrom: boolean;
   duration: string;
   description: string;
   benefits: string[];
-  icon?: string;
 }
 
 export interface Product {
@@ -45,4 +44,22 @@ export interface Tip {
   icon: string;
   title: string;
   text: string;
+}
+
+export type ClubBenefitStatus = "available" | "next" | "active" | "soon";
+
+export type ClubBenefitTone = "accent" | "secondary" | "background";
+
+export interface ClubBenefit {
+  id: string;
+  icon: string;
+  title: string;
+  statusLabel: string;
+  status: ClubBenefitStatus;
+  tone: ClubBenefitTone;
+  description: string;
+  detail: string;
+  ctaLabel: string;
+  ctaEnabled: boolean;
+  whatsappMessage: string;
 }

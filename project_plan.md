@@ -15,12 +15,14 @@ Aplicación móvil (mobile-first) de ALÉA Aesthetic House enfocada en conversi�
 - `/productos/:id` — Detalle de producto
 - `/servicios/:id` — Detalle de servicio
 - `/perfil` — Perfil de la clienta
+- `/beneficios` — Mis beneficios (wallet de cupones, recompensas y dinámicas ALÉA Club)
 
 ## 3. Core Features
 - [x] Registro inicial simple (nombre, teléfono, correo) con persistencia local
 - [x] Saludo personalizado "Hola, [nombre]"
 - [x] Navegación inferior de 5 secciones con botón "Agenda" destacado
-- [x] Inicio comercial: hero promocional, CTAs, beneficios, destacados y tips
+- [x] Inicio comercial: hero promocional, CTAs, acceso rápido a beneficios, destacados y tips
+- [x] Pantalla "Mis beneficios" tipo wallet (cupón de bienvenida, segunda visita, dinámica activa, cashback) con acceso desde Inicio y Perfil
 - [x] Promociones con tarjetas, detalle en modal y solicitud por WhatsApp
 - [x] Servicios con tarjetas, detalle y botón "Solicitar cita"
 - [x] Flujo de agendado: fecha + horarios (10:00–19:00, citas de 1h), resumen y confirmación
@@ -60,6 +62,15 @@ Actualmente los datos son simulados (`src/mocks`). Cuando se conecte backend, la
 | client_id | uuid | FK a clients |
 | promo_id | text | Promoción solicitada |
 | created_at | timestamptz | Fecha de solicitud |
+
+### Table: client_benefits (prevista)
+| Field | Type | Description |
+|-------|------|-------------|
+| id | uuid | Primary key |
+| client_id | uuid | FK a clients |
+| benefit_key | text | Identificador del beneficio (cupón, segunda visita, dinámica, cashback) |
+| status | text | available / next / active / soon |
+| activated_at | timestamptz | Fecha de activación |
 
 ## 5. Backend / Third-party Integration Plan
 - Database: **no conectada** — datos de demostración (localStorage + mocks). Se puede conectar Readdy Backend o SaaS Supabase cuando la clienta quiera guardar citas de forma permanente.

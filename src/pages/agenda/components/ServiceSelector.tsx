@@ -1,3 +1,4 @@
+import { formatPrice } from "@/utils/format";
 import type { Service } from "@/types/content";
 
 interface ServiceSelectorProps {
@@ -34,7 +35,8 @@ export default function ServiceSelector({ services, selectedId, onSelect }: Serv
                 isActive ? "text-background-200" : "text-accent-700"
               }`}
             >
-              {service.priceLabel} · {service.duration}
+              {service.priceFrom ? "Desde " : ""}
+              {formatPrice(service.price)} · {service.duration}
             </span>
           </button>
         );

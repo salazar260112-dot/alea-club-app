@@ -1,6 +1,6 @@
 import { benefits } from "@/mocks/benefits";
 
-export default function BenefitsRow() {
+export default function AdvantagesStrip() {
   return (
     <div className="no-scrollbar -mx-5 flex gap-3 overflow-x-auto px-5 pb-1">
       {benefits.map((benefit) => (

@@ -43,7 +43,7 @@ export default function PromoCard({ promo, onRequest, className = "" }: PromoCar
           </h3>
         </button>
         <p className="text-xs leading-relaxed text-foreground-600">{promo.headline}</p>
-        <div className="flex items-end gap-2 pt-1">
+        <div className="flex flex-wrap items-end gap-2 pt-1">
           <span className="font-heading text-xl font-extrabold leading-none text-accent-700">
             {promo.priceLabel}
           </span>

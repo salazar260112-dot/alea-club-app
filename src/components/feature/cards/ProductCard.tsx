@@ -39,11 +39,11 @@ export default function ProductCard({ product, className = "" }: ProductCardProp
         <p className="text-xs leading-relaxed text-foreground-600 line-clamp-2">
           {product.benefit}
         </p>
-        <div className="mt-auto flex items-center justify-between gap-2 pt-2">
+        <div className="mt-auto flex flex-col gap-2 pt-2">
           <span className="font-heading text-base font-extrabold text-foreground-950">
             {formatPrice(product.price)}
           </span>
-          <Link to={to} className={buttonClass("primary", "sm")}>
+          <Link to={to} className={buttonClass("primary", "sm", "w-full")}>
             Comprar
           </Link>
         </div>
