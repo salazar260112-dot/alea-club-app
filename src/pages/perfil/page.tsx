@@ -6,7 +6,7 @@ import Button from "@/components/base/Button";
 import { useClient } from "@/hooks/useClient";
 import { longDateLabel } from "@/utils/date";
 import { formatDateTime } from "@/utils/format";
-import { siteConfig } from "@/config/site";
+import { siteConfig, whatsappLink } from "@/config/site";
 import type { ClientInfo } from "@/context/client-types";
 
 export default function Perfil() {
@@ -220,7 +220,7 @@ export default function Perfil() {
           </p>
           <p className="mt-1 text-xs text-foreground-600">{siteConfig.hoursLabel}</p>
           <a
-            href={`https://wa.me/${siteConfig.whatsappNumber}`}
+            href={whatsappLink("Hola ALÉA, necesito información")}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-3 inline-flex h-10 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-full border border-background-300 bg-background-50 px-5 font-label text-sm font-semibold text-foreground-950 transition-colors hover:border-accent-400"
@@ -253,3 +253,4 @@ export default function Perfil() {
     </div>
   );
 }
+

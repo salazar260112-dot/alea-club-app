@@ -11,6 +11,7 @@ import PromoDetailModal from "@/components/feature/PromoDetailModal";
 import { promotions } from "@/mocks/promotions";
 import { services } from "@/mocks/services";
 import { products } from "@/mocks/products";
+import { whatsappLink } from "@/config/site";
 import type { Promotion } from "@/types/content";
 
 export default function Home() {
@@ -88,7 +89,7 @@ export default function Home() {
             Escríbenos por WhatsApp y te ayudamos a elegir el tratamiento ideal para tu piel.
           </p>
           <a
-            href="https://wa.me/5215555555555?text=Hola%20AL%C3%89A%2C%20quiero%20asesor%C3%ADa%20para%20elegir%20un%20tratamiento"
+            href={whatsappLink("Hola ALÉA, quiero asesoría para elegir un tratamiento")}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-1 inline-flex h-11 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-full border border-background-300 bg-background-50 px-5 font-label text-sm font-semibold text-foreground-950 transition-colors hover:border-accent-400"
@@ -103,3 +104,4 @@ export default function Home() {
     </div>
   );
 }
+
